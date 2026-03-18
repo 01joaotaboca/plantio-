@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Agro na Palma da Mão</title>
+    <style>
+        :root { --primary: #1b5e20; --secondary: #0d47a1; --accent: #e65100; --bg: #f4f7f4; --white: #ffffff; }
+        
+        /* --- TELA INICIAL COM ANIMAÇÃO DE PLANTIO --- */
+        #splash-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--primary); color: white;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            z-index: 9999; transition: opacity 0.8s ease-out;
+            overflow: hidden;
+        }
+
+        .animacao-container { position: relative; width: 200px; height: 120px; margin-bottom: 20px; }
+        
+        /* O Trator */
+        .trator { font-size: 60px; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); animation: vibrar 0.2s infinite; }
+        
+        /* As Sementes saindo atrás */
+        .semeando {
+            position: absolute; right: 10px; top: 70px;
+            width: 80px; height: 2px;
+        }
+        .grao {
+            position: absolute; background: #8d6e63; width: 6px; height: 6px; border-radius: 50%;
+            opacity: 0; animation: cair-semente 1s infinite;
+        }
+        .grao:nth-child(2) { animation-delay: 0.3s; right: 20px; }
+        .grao:nth-child(3) { animation-delay: 0.6s; right: 40px; }
+
+        @keyframes vibrar {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            50% { transform: translate(-50%, -52%) rotate(1deg); }
+            100% { transform: translate(-50%, -50%) rotate(0deg); }
+        }
+
+        @keyframes cair-semente {
+            0% { transform: translate(0, 0); opacity: 1; }
+            100% { transform: translate(40px, 20px); opacity: 0; }
+        }
+
+        .splash-title { font-size: 22px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+
+        /* --- RESTO DO APP (FÓRMULAS ORIGINAIS PROTEGIDAS) --- */
+        body { font-family: 'Segoe UI', Roboto, sans-serif; background-color: var(--bg); padding: 15px; margin: 0; color: #333; padding-bottom: 80px; }
+        .header-app { text-align: center; padding: 10px 0 20px; }
+        .header-app h1 { margin: 0; font-size: 1.3rem; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; }
+        .card { max-width: 480px; margin: 0 auto 15px; background: var(--white); padding: 20px; border-radius: 18px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-left: 6px solid var(--primary); }
+        .card-blue { border-left-color: var(--secondary); }
+        .card-orange { border-left-color: var(--accent); }
+        h3 { margin-top: 0; font-size: 0.95rem; color: #555; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 15px; }
+        label { display: block; margin: 12px 0 6px; font-weight: 600; color: #666; font-size: 13px; }
+        input, select { width: 100%; padding: 12px; border: 1.5px solid #e0e0e0; border-radius: 10px; box-sizing: border-box; font-size: 16px; background: #fdfdfd; }
+        .box-destaque { padding: 15px; border-radius: 12px; margin: 15px 0; text-align: center; }
+        .bg-germ { background: #e8f5e9; border: 1px solid #c8e6c9; }
+        .bg-recom { background: #fff3e0; border: 1px solid #ffe0b2; }
+        .bg-custo { background: #e3f2fd; border: 1px solid #bbdefb; }
+        .resultado-valor { font-size: 28px; font-weight: 800; display: block; margin: 2px 0; }
+        .text-germ { color: var(--primary); }
+        .text-recom { color: var(--accent); }
+        .text-custo { color: var(--secondary); }
+        .grid { display: flex; gap: 10px; }
+        .grid > div { flex: 1; }
+        .btn { cursor: pointer; border: none; font-weight: bold; border-radius: 12px; padding: 16px; width: 100%; font-size: 16px; display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 10px; }
+        .btn-whats { background: #25d366; color: white; }
+        .btn-save { background: var(--secondary); color: white; }
+        .btn-limpar { background: #f5f5f5; color: #999; font-size: 12px; margin-top: 20px; }
+        .hist-item { background: #fff; border: 1px solid #eee; padding: 12px; border-radius: 10px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .footer-assinatura { text-align: center; font-size: 12px; color: #777; padding: 20px 0; font-weight: bold; }
+        small { font-size: 10px; font-weight: bold; text-transform: uppercase; opacity: 0.7; }
+    </style>
+</head>
+<body>
+
+<div id="splash-screen">
+    <div class="animacao-container">
+        <div class="semeando">
+            <div class="grao"></div>
+            <div class="grao"></div>
+            <div class="grao"></div>
+        </div>
+        <div class="trator">🚜</div>
+    </div>
+    <div class="splash-title">Agro na Palma da Mão</div>
+    <p style="margin-top:15px; font-size:12px; opacity:0.7;">INICIANDO PLANTIO...</p>
+</div>
+
+<div class="header-app"><h1>Agro na Palma da Mão</h1></div>
+
+<div class="card">
+    <h3>🌱 1. Qualidade do Lote</h3>
+    <div class="grid">
+        <div><label>Variedade</label><input type="text" id="variedade" placeholder="Ex: M8349"></div>
+        <div><label>Lote</label><input type="text" id="lote" placeholder="Ex: 0896"></div>
+    </div>
+    <div class="grid">
+        <div><label>Semeado (un)</label><input type="number" id="total_semeado" value="100" oninput="calcularTudo()"></div>
+        <div><label>Germinado (un)</label><input type="number" id="germinadas" value="92" oninput="calcularTudo()"></div>
+    </div>
+    <div class="box-destaque bg-germ">
+        <small class="text-germ">Germinação Real</small>
+        <span id="res-porcentagem" class="resultado-valor text-germ">0%</span>
+    </div>
+</div>
+
+<div class="card card-orange">
+    <h3>🚜 2. Recomendação</h3>
+    <div class="grid">
+        <div><label>Sem/m</label><input type="number" id="sem_metro" value="12" step="0.1" oninput="calcularTudo()"></div>
+        <div><label>Espaçamento (m)</label><input type="number" id="espacamento" value="0.45" step="0.01" oninput="calcularTudo()"></div>
+    </div>
+    <label>PMS (Peso de 1.000 sementes - g)</label>
+    <input type="number" id="pms" value="180" oninput="calcularTudo()">
+    <div class="box-destaque bg-recom">
+        <small class="text-recom">Gasto Corrigido por Hectare</small>
+        <span id="res-kg-ha" class="resultado-valor text-recom">0 kg/ha</span>
+    </div>
+</div>
+
+<div class="card card-blue">
+    <h3>💰 3. Planejamento e Custos</h3>
+    <label>Área Total (ha)</label>
+    <input type="number" id="area_total" placeholder="Hectares" oninput="calcularTudo()">
+    <div class="grid">
+        <div><label>Embalagem</label>
+            <select id="tipo_emb" onchange="ajustarPesoPadrao()">
+                <option value="Sacos">Saco (40kg)</option>
+                <option value="Bags">Big Bag (1000kg)</option>
+            </select>
+        </div>
+        <div><label>Peso Emb (kg)</label><input type="number" id="peso_emb" value="40" oninput="calcularTudo()"></div>
+    </div>
+    <label>Preço Semente (R$/kg)</label>
+    <input type="number" id="preco_kg" placeholder="R$ 0,00" oninput="calcularTudo()">
+    <div class="box-destaque bg-custo">
+        <small class="text-custo">Total Semente / Investimento</small>
+        <span id="res-total-kg" class="resultado-valor text-custo" style="font-size: 22px;">0 kg total</span>
+        <span id="res-custo-total" class="resultado-valor text-custo">R$ 0,00</span>
+    </div>
+    <button class="btn btn-save" onclick="salvarTeste()">💾 Salvar no Histórico</button>
+    <button class="btn btn-whats" onclick="enviarWhatsApp()">Mandar no WhatsApp</button>
+</div>
+
+<div class="card" style="border-left-color: #555;">
+    <h3>📋 Histórico de Testes</h3>
+    <div id="lista-historico"></div>
+    <button class="btn btn-limpar" onclick="limparTudo()">Limpar tudo</button>
+</div>
+
+<div class="footer-assinatura">Desenvolvido por João Divino</div>
+
+<script>
+    window.onload = function() {
+        // Esconder tela de abertura
+        setTimeout(() => {
+            const splash = document.getElementById('splash-screen');
+            splash.style.opacity = '0';
+            setTimeout(() => { splash.style.display = 'none'; }, 800);
+        }, 3000);
+
+        carregarHistorico(); 
+        calcularTudo(); 
+    };
+
+    function ajustarPesoPadrao() {
+        const tipo = document.getElementById('tipo_emb').value;
+        document.getElementById('peso_emb').value = (tipo === "Sacos") ? 40 : 1000;
+        calcularTudo();
+    }
+
+    function calcularTudo() {
+        const totalS = parseFloat(document.getElementById('total_semeado').value) || 100;
+        const germ = parseFloat(document.getElementById('germinadas').value) || 0;
+        const pGerm = germ / totalS;
+        document.getElementById('res-porcentagem').innerText = (pGerm * 100).toFixed(1).replace('.', ',') + "%";
+
+        const sm = parseFloat(document.getElementById('sem_metro').value) || 0;
+        const esp = parseFloat(document.getElementById('espacamento').value) || 0.45;
+        const pms = parseFloat(document.getElementById('pms').value) || 0;
+        
+        let sHa = (10000 / esp) * sm;
+        let sReal = pGerm > 0 ? (sHa / pGerm) : sHa;
+        let kgHa = (sReal * pms) / 1000000;
+        
+        document.getElementById('res-kg-ha').innerText = kgHa.toFixed(2).replace('.', ',') + " kg/ha";
+
+        const area = parseFloat(document.getElementById('area_total').value) || 0;
+        const precoKg = parseFloat(document.getElementById('preco_kg').value) || 0;
+        let tKg = kgHa * area;
+        
+        document.getElementById('res-total-kg').innerText = Math.round(tKg).toLocaleString('pt-BR') + " kg total";
+        document.getElementById('res-custo-total').innerText = (tKg * precoKg).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
+    }
+
+    function salvarTeste() {
+        const var_nome = document.getElementById('variedade').value || 'Sem Nome';
+        const lote_nome = document.getElementById('lote').value || '---';
+        const germ = document.getElementById('res-porcentagem').innerText;
+        const kgHa = document.getElementById('res-kg-ha').innerText;
+        const data = new Date().toLocaleString('pt-BR', {day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit'});
+        
+        const teste = { id: Date.now(), var_nome, lote_nome, germ, kgHa, data };
+        let hist = JSON.parse(localStorage.getItem('agro_hist') || '[]');
+        hist.unshift(teste);
+        localStorage.setItem('agro_hist', JSON.stringify(hist));
+        carregarHistorico();
+    }
+
+    function carregarHistorico() {
+        const lista = document.getElementById('lista-historico');
+        let hist = JSON.parse(localStorage.getItem('agro_hist') || '[]');
+        if (hist.length === 0) {
+            lista.innerHTML = '<p style="text-align:center; color:#999; font-size:12px;">Nenhum teste salvo.</p>';
+            return;
+        }
+        lista.innerHTML = hist.map(t => `<div class="hist-item"><div class="hist-info"><strong>${t.var_nome}</strong> (Lote: ${t.lote_nome})<br><small>${t.data} | Germ: ${t.germ} | ${t.kgHa}</small></div><button style="background:#ffebee; color:#c62828; border:none; padding:8px; border-radius:6px; cursor:pointer; font-size:11px;" onclick="removerTeste(${t.id})">Apagar</button></div>`).join('');
+    }
+
+    function removerTeste(id) {
+        let hist = JSON.parse(localStorage.getItem('agro_hist') || '[]');
+        hist = hist.filter(t => t.id !== id);
+        localStorage.setItem('agro_hist', JSON.stringify(hist));
+        carregarHistorico();
+    }
+
+    function limparTudo() { if(confirm("Apagar tudo?")) { localStorage.clear(); location.reload(); } }
+
+    function enviarWhatsApp() {
+        const v = document.getElementById('variedade').value || '---';
+        const l = document.getElementById('lote').value || '---';
+        const g = document.getElementById('res-porcentagem').innerText;
+        const sm = document.getElementById('sem_metro').value;
+        const kgHa = document.getElementById('res-kg-ha').innerText;
+        const area = document.getElementById('area_total').value || '0';
+        const tKg = document.getElementById('res-total-kg').innerText;
+        const custo = document.getElementById('res-custo-total').innerText;
+        const pKg = parseFloat(document.getElementById('preco_kg').value || 0).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
+        const dataHora = new Date().toLocaleString('pt-BR');
+
+        const msg = `*🌱 AGRO NA PALMA DA MÃO*%0A*RELATÓRIO DE SEMEADURA*%0A---------------------------------%0A*IDENTIFICAÇÃO*%0A🔹 *Variedade:* ${v}%0A🔹 *Lote:* ${l}%0A🔹 *Germinação:* ${g}%0A%0A*RECOMENDAÇÃO*%0A📏 *Sementes/m:* ${sm}%0A🚜 *Gasto/ha:* ${kgHa}%0A📍 *Área:* ${area} hectares%0A%0A*INVESTIMENTO*%0A📦 *Semente Total:* ${tKg}%0A💰 *Preço por kg:* ${pKg}%0A✅ *TOTAL:* ${custo}%0A---------------------------------%0A🕒 _${dataHora}_%0A👨‍💻 _Desenvolvido por João Divino_`;
+        window.open(`https://wa.me/?text=${msg}`, '_blank');
+    }
+</script>
+</body>
+</html>

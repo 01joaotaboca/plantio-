@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agro na Palma da Mão</title>
+
+<link rel="manifest" href="manifest.json">
+
+<style>
+body{
+    margin:0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #1b5e20, #0d47a1);
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    height:100vh;
+    text-align:center;
+}
+
+.container{
+    max-width:350px;
+    padding:30px;
+}
+
+.logo{
+    font-size:60px;
+    margin-bottom:10px;
+}
+
+h1{
+    margin:0;
+    font-size:22px;
+    letter-spacing:1px;
+}
+
+p{
+    font-size:14px;
+    opacity:0.9;
+    margin:15px 0 30px;
+}
+
+.btn{
+    background:#e65100;
+    border:none;
+    padding:15px;
+    width:100%;
+    border-radius:12px;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.btn:hover{
+    transform:scale(1.05);
+}
+
+.footer{
+    position:absolute;
+    bottom:15px;
+    width:100%;
+    font-size:11px;
+    opacity:0.8;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="logo">🌱</div>
+    <h1>AGRO NA PALMA DA MÃO</h1>
+    
+    <p>
+        Controle de germinação, cálculo de sementes e planejamento completo de plantio direto no campo.
+    </p>
+
+    <button class="btn" onclick="entrarApp()">
+        🚜 Entrar no Sistema
+    </button>
+</div>
+
+<div class="footer">
+    Desenvolvido por João Divino Barbosa
+</div>
+
+<script>
+function entrarApp(){
+    window.location.href = "app.html";
+}
+
+// Ativar modo offline
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js')
+    .then(() => console.log("App pronto offline"))
+    .catch(err => console.log("Erro:", err));
+}
+</script>
+
+</body>
+</html>
